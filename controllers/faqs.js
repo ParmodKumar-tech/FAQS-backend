@@ -1,4 +1,4 @@
-const FAQModel = require("../models/FAQSchema");
+const FAQModel = require("../models/faqSchema");
 const redis = require("redis");
 
 const redisClient = redis.createClient();
