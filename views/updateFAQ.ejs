@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: rgba(0, 0, 0, 0.689); color: white; align-content: center; text-align: center; height: 100vh;">
+    <h1>Update FAQS</h1>
+    <form action="/api/faqs/<%=FAQData._id%>?_method=put" method="POST">
+    <input 
+    required 
+    type="text" 
+    placeholder="Enter FAQS Question here" 
+    name="question" value="<%=FAQData.question%>"/>
+    <br>
+    
+    <textarea 
+    style="height: 200px; width: 200px;"
+    type="text" 
+    placeholder="type your answer" 
+    name="answer"><%=FAQData.answer%></textarea>
+    <button type="submit" style="border: 2px solid black; text-decoration: none; color: black; background-color: white; padding: 2px;"
+    > Update </button>
+    </form>
+</body>
+</html>
