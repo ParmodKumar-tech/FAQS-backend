@@ -2,9 +2,11 @@
   "name": "faq-backend",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts":{
-    "start": "node server.js"
+  "scripts": {
+  "start": "node server.js",
+  "vercel-build": "vercel"
   },
+
   "keywords": [],
   "author": "",
   "license": "ISC",
