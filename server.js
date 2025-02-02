@@ -28,6 +28,4 @@ main()
 
 app.use("/",faqsRoute);
 
-app.listen(PORT,(req,res)=>{
-    console.log(`server is listining on port ${PORT}`);
-})
+module.exports = app;
