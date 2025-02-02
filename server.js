@@ -28,7 +28,6 @@ main()
 
 app.use("/",faqsRoute);
 
-const app = require("../server");
 
 // Vercel requires an exported function
 module.exports = (req, res) => {
