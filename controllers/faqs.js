@@ -16,7 +16,7 @@ redisClient.on("error", (err) => console.error("Redis Error:", err));
 async function connectRedis() {
     try {
         await redisClient.connect();
-        console.log("✅ Connected to Upstash Redis");
+        
     } catch (error) {
         console.error("Redis Connection Failed:", error.message);
     }
