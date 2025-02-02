@@ -29,8 +29,7 @@ main()
 app.use("/",faqsRoute);
 
 
-// Vercel requires an exported function
-module.exports = (req, res) => {
-  return app(req, res);
-};
+app.listen(PORT,(req,res)=>{
+    console.log(`server is listining on port ${PORT}`);
+})
 
