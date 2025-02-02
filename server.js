@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const methodOverride = require("method-override");
-const faqsRoute = require("../routes/faqs");
+const faqsRoute=require("./routes/faqs");
 const dotenv = require("dotenv");
 
 dotenv.config();
