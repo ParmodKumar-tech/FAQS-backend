@@ -1,35 +1,31 @@
-
-const express=require("express");
-const app=express();
-const mongoose=require("mongoose");
-const methodOverride =require("method-override");
-const faqsRoute=require("./routes/faqs");
-
+const express = require("express");
+const mongoose = require("mongoose");
+const methodOverride = require("method-override");
+const faqsRoute = require("../routes/faqs");
 const dotenv = require("dotenv");
-dotenv.config()
 
-const PORT=process.env.PORT || 8000;
-const dbURL=process.env.DB_URL;
+dotenv.config();
 
-// const dbURL="mongodb://127.0.0.1:27017/faq-backend";
+const app = express();
 
 app.use(methodOverride("_method"));
-app.use(express.urlencoded({extended:true}));
-app.set("view engine","ejs");
+app.use(express.urlencoded({ extended: true }));
+app.set("view engine", "ejs");
 
-async function main(){
+// MongoDB Connection
+const dbURL = process.env.DB_URL;
+async function connectDB() {
+  try {
     await mongoose.connect(dbURL);
+    console.log("✅ Connected to MongoDB");
+  } catch (error) {
+    console.error("❌ MongoDB Connection Failed:", error.message);
+  }
 }
+connectDB();
 
-main()
-.then((res)=>{console.log("Connected with DB")})
-.catch((e)=>{console.log(e.message)})
+// Use routes
+app.use("/", faqsRoute);
 
-
-app.use("/",faqsRoute);
-
-
-app.listen(PORT,(req,res)=>{
-    console.log(`server is listining on port ${PORT}`);
-})
-
+// ✅ Instead of `app.listen()`, export for Vercel
+module.exports = app;
