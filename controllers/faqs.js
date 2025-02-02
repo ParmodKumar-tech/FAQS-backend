@@ -1,10 +1,28 @@
 const FAQModel = require("../models/faqSchema");
 const redis = require("redis");
 
-const redisClient = redis.createClient();
-redisClient.on("error", (err) => console.error("Redis Error:", err));
-redisClient.connect();
+const dotenv = require("dotenv");
+dotenv.config();
 
+const redisClient = redis.createClient({
+    url: process.env.REDIS_URL, 
+    socket: {
+        tls: true, 
+    }
+});
+
+redisClient.on("error", (err) => console.error("Redis Error:", err));
+
+async function connectRedis() {
+    try {
+        await redisClient.connect();
+        console.log("✅ Connected to Upstash Redis");
+    } catch (error) {
+        console.error("Redis Connection Failed:", error.message);
+    }
+}
+
+connectRedis();
 
 
 async function translateText(text, targetLang) {
@@ -16,10 +34,10 @@ async function translateText(text, targetLang) {
         if (data.responseData && data.responseData.translatedText) {
             return data.responseData.translatedText; // Return the translated text
         } else {
-            return text; // Fallback to original text
+            return text; 
         }
     } catch (error) {
-        return text; // Fallback to English if API fails
+        return text; 
     }
 }
 
@@ -41,7 +59,7 @@ module.exports.queryFAQS = async (req, res) => {
         // Check Redis cache
         const cachedFAQs = await redisClient.get(`faqs:${lang || "default"}`);
         if (cachedFAQs) {
-            console.log("✅ Returning Cached Translated FAQs from Redis");
+           
             return res.send(JSON.parse(cachedFAQs));
         }
 
@@ -69,7 +87,7 @@ module.exports.queryFAQS = async (req, res) => {
         // Store translated FAQs in Redis (cache for 1 hour)
         await redisClient.setEx(`faqs:${lang || "default"}`, 3600, JSON.stringify(faqs));
 
-        console.log("Storing Translated FAQs in Redis for Fast Retrieval");
+      
         res.json(faqs);
     } catch (error) {
         console.error("Error Fetching FAQs:", error.message);
